@@ -1,14 +1,22 @@
-import {Physics} from 'phaser'
+import { Physics } from 'phaser';
+import { PLAYER_DRAG, PLAYER_FIRE_RATE, PLAYER_KEY, PLAYER_MAX_VELOCITY, PLAYER_SCALE } from '../constants/GameConstants';
+import { BulletGroup } from './BulletGroup';
+export class Player extends Physics.Arcade.Sprite{
+  private bulletTime = 0;
 
-export class Player  extends Physics.Arcade.Sprite {
-    constructor(scene: Phaser.Scene, x: number, y: number) {
-        super(scene, x, y, "295");
-        scene.add.existing(this);
-        scene.physics.world.enable(this);
-        this.setDrag(100);
-        this.setMaxVelocity(200);
-        this.setRotation(Math.random() * 360);
-        this.setScale(0.5, 0.5);
-        return this as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+  constructor(scene: Phaser.Scene, x: number, y: number) {
+    super(scene, x, y, PLAYER_KEY);
+    scene.add.existing(this);
+    scene.physics.world.enable(this);
+    this.setDrag(PLAYER_DRAG);
+    this.setMaxVelocity(PLAYER_MAX_VELOCITY);
+    this.setScale(PLAYER_SCALE, PLAYER_SCALE);
+  }
+
+  fire(bulletGroup: BulletGroup) {
+    if (this.bulletTime < this.scene.time.now) {
+      this.bulletTime = this.scene.time.now + PLAYER_FIRE_RATE;
+      bulletGroup.fire(this)
     }
+  }
 }

@@ -1,0 +1,39 @@
+/*
+USE BETTER COMMENTS EXTENSION IN VS CODE TO MAKE THIS FILE MORE READABLE
+
+THE GAME WILL USE SAME VALUES AGAIN AND AGAIN
+note WE WILL USE THESE AS CONSTANTS REDUCING THE ERRORS BY MISTYPING
+*/
+
+// asset keys for images and sounds
+export const BULLET_KEY = 'bullet';
+export const PLAYER_KEY = '295';
+
+// player constants
+export const PLAYER_SCALE = 0.4;
+export const PLAYER_ROTATION = 200;
+export const PLAYER_DRAG = 100;
+export const PLAYER_VELOCITY = 200;
+export const PLAYER_ORIGIN_X = 0.4;
+export const PLAYER_ORIGIN_Y = 0.5;
+export const PLAYER_FIRE_RATE = 300;
+export const PLAYER_MAX_VELOCITY = 300;
+export const PLAYER_SPEED = 200;
+
+/*
+IN THE GAME: 
+- WE WILL HAVE SEVERAL TYPES OF BULLETS
+THE ORIGINAL CLASS WILL ALWAYS BE BULLET BUT 
+THE PROPERTIES WILL BE DIFFERENT
+
+PROPERTIES MAY INCLUDE:
+- KEY, LIFE, SCALE, SPEED ETC.
+*/
+
+// bullet constants
+
+// basic bullet constants
+export const BULLET_SPEED = 300;
+export const MAX_BULLETS = 10;
+export const BULLET_LIFE = 1000;
+export const BULLET_SCALE = 0.3;
