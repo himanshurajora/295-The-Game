@@ -22,6 +22,7 @@ export class Bootloader extends Phaser.Scene {
     this.load.setPath('assets/');
     this.load.image('295');
     this.load.image('bullet');
+    this.load.image('enemy');
 
     this.load.on('complete', () => {
       this.scene.start('MainScene');

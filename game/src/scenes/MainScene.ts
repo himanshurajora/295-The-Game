@@ -2,13 +2,14 @@ import { buildTargets } from '../constants';
 import { Bullet } from '../objects/Bullet';
 import { BulletGroup } from '../objects/BulletGroup';
 import { Player } from '../objects/Player';
-
+import { Enemy } from '../objects/Enemy';
 export class MainScene extends Phaser.Scene {
   player: Player;
   cursors: Phaser.Types.Input.Keyboard.CursorKeys;
   rotationSpeed: number = 200;
   bulletTime: number = 0;
   bulletGroup: BulletGroup;
+  enemy: Enemy;
   constructor() {
     super({
       key: 'MainScene',
@@ -19,12 +20,14 @@ export class MainScene extends Phaser.Scene {
     console.log('MainScene');
   }
 
-  preload() {
-    this.player = new Player(this, 200, 200);
-    // var bullet = this.add.image(0, 0, 'bullet');
-  }
+  // for preloading main scene assets
+  preload() {}
 
   create(): void {
+    // making player and enemy
+    this.player = new Player(this, 200, 200);
+    this.enemy = new Enemy(this, 100, 100);
+
     // create cursor for keyboard input
     this.cursors = this.input.keyboard.createCursorKeys();
 
