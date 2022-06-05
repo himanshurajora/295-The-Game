@@ -5,6 +5,8 @@ THE GAME WILL USE SAME VALUES AGAIN AND AGAIN
 note WE WILL USE THESE AS CONSTANTS REDUCING THE ERRORS BY MISTYPING
 */
 
+import { getDelay } from '../utils';
+
 // asset keys for images and sounds
 export const BULLET_KEY = 'bullet';
 export const PLAYER_KEY = '295';
@@ -16,7 +18,21 @@ export const PLAYER_DRAG = 100;
 export const PLAYER_VELOCITY = 200;
 export const PLAYER_ORIGIN_X = 0.4;
 export const PLAYER_ORIGIN_Y = 0.5;
-export const PLAYER_FIRE_RATE = 300;
+// specify the number of bullets per second
+const PLAYER_FIRE_RATE_INTERNAL_LEVEL1 = 3;
+const PLAYER_FIRE_RATE_INTERNAL_LEVEL2 = 5;
+const PLAYER_FIRE_RATE_INTERNAL_LEVEL3 = 10;
+const PLAYER_FIRE_RATE_INTERNAL_LEVEL4 = 20;
+const PLAYER_FIRE_RATE_INTERNAL_LEVEL5 = 30;
+
+// convert fire rate to milliseconds
+// default fire rate
+export const PLAYER_FIRE_RATE = getDelay(PLAYER_FIRE_RATE_INTERNAL_LEVEL1);
+export const PLAYER_FIRE_RATE_LEVEL2 = getDelay(PLAYER_FIRE_RATE_INTERNAL_LEVEL2);
+export const PLAYER_FIRE_RATE_LEVEL3 = getDelay(PLAYER_FIRE_RATE_INTERNAL_LEVEL3);
+export const PLAYER_FIRE_RATE_LEVEL4 = getDelay(PLAYER_FIRE_RATE_INTERNAL_LEVEL4);
+export const PLAYER_FIRE_RATE_LEVEL5 = getDelay(PLAYER_FIRE_RATE_INTERNAL_LEVEL5);
+
 export const PLAYER_MAX_VELOCITY = 300;
 export const PLAYER_SPEED = 200;
 

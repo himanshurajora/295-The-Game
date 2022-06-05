@@ -7,5 +7,6 @@ Note - You can contribute to this project but can not build or publish your own 
 
 Logs : 
 - Started making the game [03-06-2022]
+- Added Shooting bullets logic [04-06-2022]
 
 Made By Vedik Dev - Himanshu Jangid
