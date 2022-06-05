@@ -3,22 +3,21 @@ import { Bullet } from '../objects/Bullet';
 import { BulletGroup } from '../objects/BulletGroup';
 import { Player } from '../objects/Player';
 import { Enemy } from '../objects/Enemy';
+import { EnemyGroup } from '../objects/EnemyGroup';
 export class MainScene extends Phaser.Scene {
   player: Player;
   cursors: Phaser.Types.Input.Keyboard.CursorKeys;
   rotationSpeed: number = 200;
   bulletTime: number = 0;
   bulletGroup: BulletGroup;
-  enemy: Enemy;
+  enemyGroup: EnemyGroup;
   constructor() {
     super({
       key: 'MainScene',
     });
   }
 
-  init() {
-    console.log('MainScene');
-  }
+  init() {}
 
   // for preloading main scene assets
   preload() {}
@@ -26,13 +25,15 @@ export class MainScene extends Phaser.Scene {
   create(): void {
     // making player and enemy
     this.player = new Player(this, 200, 200);
-    this.enemy = new Enemy(this, 100, 100);
 
     // create cursor for keyboard input
     this.cursors = this.input.keyboard.createCursorKeys();
 
     // set origin to center of player
     this.player.setOrigin(0.4, 0.5);
+
+    // the enemy group
+    this.enemyGroup = new EnemyGroup(this);
 
     // the bullet group
     this.bulletGroup = new BulletGroup(this);
@@ -44,6 +45,27 @@ export class MainScene extends Phaser.Scene {
       visible: false,
       max: 10,
     });
+
+    // add collisions b/w player and enemy
+    this.physics.add.overlap(
+      this.player,
+      this.enemyGroup,
+      (obj1: Player, obj2: Enemy) => {
+        obj2.destroy();
+      }
+    );
+
+    this.physics.add.overlap(
+      this.bulletGroup,
+      this.enemyGroup,
+      (obj1: Enemy, obj2: Bullet) => {
+        obj2.destroy();
+        obj1.health -= 10;
+        if ((obj1 as Enemy).health <= 0) {
+          obj1.destroy();
+        }
+      }
+    );
   }
 
   update(time: number, delta: number) {
@@ -77,6 +99,13 @@ export class MainScene extends Phaser.Scene {
     // firing logic
     if (this.cursors.space.isDown) {
       this.player.fire(this.bulletGroup);
+    }
+
+    // generate enemies
+    if (time > this.bulletTime) {
+      this.bulletTime = time + 1000;
+      // generate x less than 0 and greater than game width
+      this.enemyGroup.createEnemy(this.player);
     }
 
     this.physics.world.wrap(this.player, 5);

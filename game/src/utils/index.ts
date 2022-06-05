@@ -1,1 +1,1 @@
-export * from './getDelay'
+export * from './utils'

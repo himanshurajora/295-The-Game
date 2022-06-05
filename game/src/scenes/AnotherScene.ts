@@ -6,7 +6,6 @@ export class AnotherScene extends Phaser.Scene {
     }
 
     init() {
-        console.log('AnotherScene');
     }
 
     preload(): void {

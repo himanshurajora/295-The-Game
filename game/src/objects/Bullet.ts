@@ -1,6 +1,7 @@
 import {
   BULLET_KEY,
   BULLET_LIFE,
+  BULLET_MASS,
   BULLET_SCALE,
   BULLET_SPEED,
 } from '../constants/GameConstants';
@@ -10,6 +11,7 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
   bulletSpeed: number = BULLET_SPEED;
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, BULLET_KEY);
+    this.setName(BULLET_KEY);
   }
 
   fire(player: Player) {
@@ -17,6 +19,7 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
     this.setActive(true);
     this.setVisible(true);
     this.setScale(BULLET_SCALE, BULLET_SCALE);
+    this.setMass(BULLET_MASS);
 
     // essentially a copy of the player's transform (position, rotation)
     this.setPosition(player.x, player.y);

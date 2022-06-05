@@ -10,8 +10,10 @@ import { getDelay } from '../utils';
 // asset keys for images and sounds
 export const BULLET_KEY = 'bullet';
 export const PLAYER_KEY = '295';
+export const ENEMY_KEY = 'enemy';
 
 // player constants
+export const PLAYER_MASS = 80;
 export const PLAYER_SCALE = 0.4;
 export const PLAYER_ROTATION = 200;
 export const PLAYER_DRAG = 100;
@@ -19,7 +21,7 @@ export const PLAYER_VELOCITY = 200;
 export const PLAYER_ORIGIN_X = 0.4;
 export const PLAYER_ORIGIN_Y = 0.5;
 // specify the number of bullets per second
-const PLAYER_FIRE_RATE_INTERNAL_LEVEL1 = 3;
+const PLAYER_FIRE_RATE_INTERNAL_LEVEL1 = 20;
 const PLAYER_FIRE_RATE_INTERNAL_LEVEL2 = 5;
 const PLAYER_FIRE_RATE_INTERNAL_LEVEL3 = 10;
 const PLAYER_FIRE_RATE_INTERNAL_LEVEL4 = 20;
@@ -49,7 +51,16 @@ PROPERTIES MAY INCLUDE:
 // bullet constants
 
 // basic bullet constants
+export const BULLET_MASS = 1;
 export const BULLET_SPEED = 300;
 export const MAX_BULLETS = 10;
 export const BULLET_LIFE = 1000;
 export const BULLET_SCALE = 0.3;
+
+
+// enemy constants
+export const ENEMY_MASS = 1;
+export const ENEMY_HEALTH = 100;
+export const ENEMY_MIN_SCALE = 0.1;
+export const ENEMY_MAX_SCALE = 0.25;
+export const ENEMY_DRAG = 100;
