@@ -20,13 +20,13 @@ export class EnemyGroup extends Phaser.Physics.Arcade.Group {
       -200,
       0,
       this.scene.game.canvas.width,
-      this.scene.game.canvas.width + 200
+      this.scene.game.canvas.width + 500
     );
     const y = getRandomNumberInTwoRanges(
       -200,
       0,
       this.scene.game.canvas.height,
-      this.scene.game.canvas.height + 200
+      this.scene.game.canvas.height + 500
     );
     const enemy = this.getFirstDead(true, x, y, ENEMY_KEY, 0, true);
     // // random values
