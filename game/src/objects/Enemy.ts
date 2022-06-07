@@ -9,8 +9,12 @@ import {
 import { getRandomInRange } from '../utils';
 
 export class Enemy extends Phaser.Physics.Arcade.Sprite {
-  health: number = ENEMY_HEALTH;
+  public health: number = ENEMY_HEALTH;
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, ENEMY_KEY);
+  }
+
+  setHealth(health: number){
+    this.health = health;
   }
 }

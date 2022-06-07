@@ -10,6 +10,6 @@ export class BulletGroup extends Phaser.Physics.Arcade.Group {
   fire(player: Player) {
     // this will get the first inactive bullet
     const bullet = this.getFirstDead(true);
-    bullet?.fire(player);
+    (bullet as Bullet).fire(player);
   }
 }

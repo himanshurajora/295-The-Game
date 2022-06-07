@@ -11,6 +11,7 @@ export class MainScene extends Phaser.Scene {
   bulletTime: number = 0;
   bulletGroup: BulletGroup;
   enemyGroup: EnemyGroup;
+  playerScore: Phaser.GameObjects.Text;
   constructor() {
     super({
       key: 'MainScene',
@@ -44,6 +45,8 @@ export class MainScene extends Phaser.Scene {
       active: false,
       visible: false,
       max: 10,
+      'setXY.x': -1000,
+      'setXY.y': -1000,
     });
 
     // add collisions b/w player and enemy
@@ -60,12 +63,18 @@ export class MainScene extends Phaser.Scene {
       this.enemyGroup,
       (obj1: Enemy, obj2: Bullet) => {
         obj2.destroy();
+        this.player.killCount += 1;
         obj1.health -= 10;
-        if ((obj1 as Enemy).health <= 0) {
+        if (obj1.health <= 0) {
           obj1.destroy();
         }
       }
     );
+
+    // add player score
+    this.playerScore = this.add.text(20, 20, '', {
+      fontSize: '12px',
+    });
   }
 
   update(time: number, delta: number) {
@@ -109,5 +118,6 @@ export class MainScene extends Phaser.Scene {
     }
 
     this.physics.world.wrap(this.player, 5);
+    // this.playerScore.setText(`Kill Count ${this.player.killCount}`);
   }
 }

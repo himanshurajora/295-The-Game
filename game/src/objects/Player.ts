@@ -10,7 +10,7 @@ import {
 import { BulletGroup } from './BulletGroup';
 export class Player extends Physics.Arcade.Sprite {
   private bulletTime = 0;
-
+  public killCount = 0;
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, PLAYER_KEY);
     scene.add.existing(this);

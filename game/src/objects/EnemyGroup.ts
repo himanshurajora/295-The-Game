@@ -28,7 +28,7 @@ export class EnemyGroup extends Phaser.Physics.Arcade.Group {
       this.scene.game.canvas.height,
       this.scene.game.canvas.height + 500
     );
-    const enemy = this.getFirstDead(true, x, y, ENEMY_KEY, 0, true);
+    const enemy = this.getFirstDead(true, x, y, ENEMY_KEY, 0, true) as Enemy;
     // // random values
     const xScale = getRandomInRange(ENEMY_MIN_SCALE, ENEMY_MAX_SCALE),
       yScale = getRandomInRange(ENEMY_MIN_SCALE, ENEMY_MAX_SCALE);
@@ -39,6 +39,7 @@ export class EnemyGroup extends Phaser.Physics.Arcade.Group {
     enemy.setScale(xScale, xScale);
     enemy.setVelocity(xVelocity, yVelocity);
     enemy.setMass(ENEMY_MASS * xScale * (1 / 3));
+    // enemy.setHealth(100);
 
     enemy.on('destroy', () => {
       // create particle effect
