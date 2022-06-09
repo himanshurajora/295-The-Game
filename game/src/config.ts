@@ -26,7 +26,7 @@ export const CONFIG: any = {
             gravity: {
                 y: 0,
             },
-            debug: true,
+            // debug: true,
         },
     },
     scene: [Bootloader, MainScene, AnotherScene],

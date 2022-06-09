@@ -35,10 +35,10 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
       () => {
         // using destroy because it saved computation
         // while setActive(false) and setVisible(false) will still compute the transform
-        this.destroy();
+        // this.destroy();
 
-        //// this.setActive(false);
-        //// this.setVisible(false);
+        this.setActive(false);
+        this.setVisible(false);
       },
       [],
       this

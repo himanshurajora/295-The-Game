@@ -13,6 +13,12 @@ import { Player } from './Player';
 export class EnemyGroup extends Phaser.Physics.Arcade.Group {
   constructor(scene: Phaser.Scene) {
     super(scene.physics.world, scene);
+    this.createMultiple({
+      classType: Enemy,
+      key: ENEMY_KEY,
+      visible: false,
+      active: false,
+    });
   }
 
   createEnemy(player: Player) {
@@ -35,11 +41,13 @@ export class EnemyGroup extends Phaser.Physics.Arcade.Group {
     const xVelocity = getRandomInRange(-100, 100) + 50,
       yVelocity = getRandomInRange(-100, 100) + 50;
     // set values
+    enemy.setActive(true);
+    enemy.setVisible(true);
     enemy.setName(ENEMY_KEY);
     enemy.setScale(xScale, xScale);
     enemy.setVelocity(xVelocity, yVelocity);
     enemy.setMass(ENEMY_MASS * xScale * (1 / 3));
-    // enemy.setHealth(100);
+    enemy.setHealth(100);
 
     enemy.on('destroy', () => {
       // create particle effect

@@ -64,3 +64,9 @@ export const ENEMY_HEALTH = 100;
 export const ENEMY_MIN_SCALE = 0.1;
 export const ENEMY_MAX_SCALE = 0.25;
 export const ENEMY_DRAG = 100;
+
+export const ENEMY_RESPAWN_TIME_DELAY = 5000;
+export const ENEMY_RESPAWN_TIME_DELAY_LEVEL2 = 500;
+export const ENEMY_RESPAWN_TIME_DELAY_LEVEL3 = 300;
+export const ENEMY_RESPAWN_TIME_DELAY_LEVEL4 = 200;
+export const ENEMY_RESPAWN_TIME_DELAY_LEVEL5 = 100;

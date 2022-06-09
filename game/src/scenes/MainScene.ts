@@ -4,6 +4,7 @@ import { BulletGroup } from '../objects/BulletGroup';
 import { Player } from '../objects/Player';
 import { Enemy } from '../objects/Enemy';
 import { EnemyGroup } from '../objects/EnemyGroup';
+import { ENEMY_RESPAWN_TIME_DELAY } from '../constants/GameConstants';
 export class MainScene extends Phaser.Scene {
   player: Player;
   cursors: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -12,6 +13,13 @@ export class MainScene extends Phaser.Scene {
   bulletGroup: BulletGroup;
   enemyGroup: EnemyGroup;
   playerScore: Phaser.GameObjects.Text;
+  enemyTimer: number = 0;
+
+  // keys
+  wKey: Phaser.Input.Keyboard.Key;
+  sKey: Phaser.Input.Keyboard.Key;
+  aKey: Phaser.Input.Keyboard.Key;
+  dKey: Phaser.Input.Keyboard.Key;
   constructor() {
     super({
       key: 'MainScene',
@@ -62,11 +70,13 @@ export class MainScene extends Phaser.Scene {
       this.bulletGroup,
       this.enemyGroup,
       (obj1: Enemy, obj2: Bullet) => {
-        obj2.destroy();
+        obj2.setActive(false);
+        obj2.setVisible(false);
         this.player.killCount += 1;
         obj1.health -= 10;
         if (obj1.health <= 0) {
-          obj1.destroy();
+          obj1.setActive(false);
+          obj1.setVisible(false);
         }
       }
     );
@@ -75,11 +85,16 @@ export class MainScene extends Phaser.Scene {
     this.playerScore = this.add.text(20, 20, '', {
       fontSize: '12px',
     });
+
+    this.wKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+    this.sKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+    this.aKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+    this.dKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
   }
 
   update(time: number, delta: number) {
     // accelerate player
-    if (this.cursors.up.isDown) {
+    if (this.cursors.up.isDown || this.wKey.isDown) {
       this.physics.velocityFromRotation(
         this.player.rotation,
         200,
@@ -89,7 +104,7 @@ export class MainScene extends Phaser.Scene {
       (this.player.body as any).acceleration.set(0);
     }
     // decelerate
-    if (this.cursors.down.isDown) {
+    if (this.cursors.down.isDown || this.sKey.isDown) {
       this.player.setVelocity(
         this.player.body.velocity.x * 0.98,
         this.player.body.velocity.y * 0.98
@@ -97,9 +112,9 @@ export class MainScene extends Phaser.Scene {
     }
 
     // rotate player
-    if (this.cursors.left.isDown) {
+    if (this.cursors.left.isDown || this.aKey.isDown) {
       this.player.setAngularVelocity(-this.rotationSpeed);
-    } else if (this.cursors.right.isDown) {
+    } else if (this.cursors.right.isDown || this.dKey.isDown) {
       this.player.setAngularVelocity(this.rotationSpeed);
     } else {
       this.player.setAngularVelocity(0);
@@ -111,8 +126,8 @@ export class MainScene extends Phaser.Scene {
     }
 
     // generate enemies
-    if (time > this.bulletTime) {
-      this.bulletTime = time + 1000;
+    if (time > this.enemyTimer) {
+      this.enemyTimer = time + ENEMY_RESPAWN_TIME_DELAY;
       // generate x less than 0 and greater than game width
       this.enemyGroup.createEnemy(this.player);
     }

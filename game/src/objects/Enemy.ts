@@ -1,12 +1,7 @@
 import {
-  ENEMY_DRAG,
   ENEMY_HEALTH,
-  ENEMY_KEY,
-  ENEMY_MASS,
-  ENEMY_MAX_SCALE,
-  ENEMY_MIN_SCALE,
+  ENEMY_KEY
 } from '../constants/GameConstants';
-import { getRandomInRange } from '../utils';
 
 export class Enemy extends Phaser.Physics.Arcade.Sprite {
   public health: number = ENEMY_HEALTH;

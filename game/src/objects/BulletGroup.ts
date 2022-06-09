@@ -4,7 +4,7 @@ import { Player } from './Player';
 
 export class BulletGroup extends Phaser.Physics.Arcade.Group {
   constructor(scene: Phaser.Scene) {
-    super(scene.physics.world, scene);
+    super(scene.physics.world, scene, {maxSize: 100});
   }
 
   fire(player: Player) {
