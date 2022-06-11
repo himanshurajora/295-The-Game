@@ -62,7 +62,8 @@ export class MainScene extends Phaser.Scene {
       this.player,
       this.enemyGroup,
       (obj1: Player, obj2: Enemy) => {
-        obj2.blast(this.enemyGroup);
+        console.log('player hit enemy');
+        obj2.blast(this.enemyGroup, this.player);
       }
     );
 
