@@ -62,21 +62,19 @@ export class MainScene extends Phaser.Scene {
       this.player,
       this.enemyGroup,
       (obj1: Player, obj2: Enemy) => {
-        obj2.destroy();
+        obj2.blast(this.enemyGroup);
       }
     );
 
     this.physics.add.overlap(
-      this.bulletGroup,
       this.enemyGroup,
+      this.bulletGroup,
       (obj1: Enemy, obj2: Bullet) => {
-        obj2.setActive(false);
-        obj2.setVisible(false);
-        this.player.killCount += 1;
+        // TODO: Fix deActivate() function not working
+        obj2.deActivate();
         obj1.health -= 10;
         if (obj1.health <= 0) {
-          obj1.setActive(false);
-          obj1.setVisible(false);
+          this.player.killCount += obj1.blast(this.enemyGroup);
         }
       }
     );
@@ -133,6 +131,6 @@ export class MainScene extends Phaser.Scene {
     }
 
     this.physics.world.wrap(this.player, 5);
-    // this.playerScore.setText(`Kill Count ${this.player.killCount}`);
+    this.playerScore.setText(`Kill Count ${this.player.killCount}`);
   }
 }

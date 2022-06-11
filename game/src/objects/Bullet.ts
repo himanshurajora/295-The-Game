@@ -29,6 +29,9 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
       this.body.velocity
     );
 
+    this.setVelocityX(this.body.velocity.x + player.body.velocity.x);
+    this.setVelocityY(this.body.velocity.y + player.body.velocity.y);
+
     // destroy the bullet after it's lifetime
     this.scene.time.delayedCall(
       BULLET_LIFE,
@@ -43,5 +46,10 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
       [],
       this
     );
+  }
+
+  deActivate() {
+    this.setActive(false);
+    this.setVisible(false);
   }
 }

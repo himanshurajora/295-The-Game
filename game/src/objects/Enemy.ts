@@ -1,7 +1,6 @@
-import {
-  ENEMY_HEALTH,
-  ENEMY_KEY
-} from '../constants/GameConstants';
+import { ENEMY_HEALTH, ENEMY_KEY } from '../constants/GameConstants';
+import { getRandomInRange } from '../utils';
+import { EnemyGroup } from './EnemyGroup';
 
 export class Enemy extends Phaser.Physics.Arcade.Sprite {
   public health: number = ENEMY_HEALTH;
@@ -9,7 +8,44 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     super(scene, x, y, ENEMY_KEY);
   }
 
-  setHealth(health: number){
+  setHealth(health: number) {
     this.health = health;
+  }
+
+  blast(enemyGroup: EnemyGroup) {
+    if (this.health <= 0) {
+      const explosion = this.scene.add.particles('bullet');
+      explosion.createEmitter({
+        speed: { min: 100, max: 200 },
+        scale: {
+          start: 0.2,
+          end: 0,
+          steps: 10,
+        },
+        quantity: 10,
+        x: this.x,
+        y: this.y,
+        blendMode: 'ADD',
+        maxParticles: 10,
+        lifespan: { min: 100, max: 400 },
+        bounce: {
+          end: 0.5,
+          start: 0.5,
+          random: true,
+        },
+      });
+
+      this.setActive(false);
+      this.setVisible(false);
+      this.setVelocity(0);
+
+      enemyGroup.remove(this);
+
+      this.scene.time.delayedCall(200, () => {
+        explosion.destroy();
+      });
+      return 1;
+    }
+    return 0;
   }
 }
