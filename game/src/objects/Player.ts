@@ -10,7 +10,8 @@ import {
 import { BulletGroup } from './BulletGroup';
 export class Player extends Physics.Arcade.Sprite {
   private bulletTime = 0;
-  public killCount = 0;
+  public killCount = 9;
+  public fireRate = PLAYER_FIRE_RATE;
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, PLAYER_KEY);
     scene.add.existing(this);
@@ -24,7 +25,7 @@ export class Player extends Physics.Arcade.Sprite {
 
   fire(bulletGroup: BulletGroup) {
     if (this.bulletTime < this.scene.time.now) {
-      this.bulletTime = this.scene.time.now + PLAYER_FIRE_RATE;
+      this.bulletTime = this.scene.time.now + this.fireRate;
       bulletGroup.fire(this);
     }
   }

@@ -4,7 +4,12 @@ import { BulletGroup } from '../objects/BulletGroup';
 import { Player } from '../objects/Player';
 import { Enemy } from '../objects/Enemy';
 import { EnemyGroup } from '../objects/EnemyGroup';
-import { ENEMY_RESPAWN_TIME_DELAY } from '../constants/GameConstants';
+import {
+  ENEMY_RESPAWN_TIME_DELAY,
+  PLAYER_ORIGIN_X,
+  PLAYER_ORIGIN_Y,
+} from '../constants/GameConstants';
+import { setPlayerControlByLevel } from '../utils/level-controls';
 export class MainScene extends Phaser.Scene {
   player: Player;
   cursors: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -39,7 +44,7 @@ export class MainScene extends Phaser.Scene {
     this.cursors = this.input.keyboard.createCursorKeys();
 
     // set origin to center of player
-    this.player.setOrigin(0.4, 0.5);
+    this.player.setOrigin(PLAYER_ORIGIN_X, PLAYER_ORIGIN_Y);
 
     // the enemy group
     this.enemyGroup = new EnemyGroup(this);
@@ -48,11 +53,10 @@ export class MainScene extends Phaser.Scene {
     this.bulletGroup = new BulletGroup(this);
     this.bulletGroup.createMultiple({
       classType: Bullet,
-      frameQuantity: 1,
       key: 'bullet',
       active: false,
       visible: false,
-      max: 10,
+      max: 1000,
       'setXY.x': -1000,
       'setXY.y': -1000,
     });
@@ -133,5 +137,8 @@ export class MainScene extends Phaser.Scene {
 
     this.physics.world.wrap(this.player, 5);
     this.playerScore.setText(`Kill Count ${this.player.killCount}`);
+
+    // level controls
+    setPlayerControlByLevel(this.player);
   }
 }

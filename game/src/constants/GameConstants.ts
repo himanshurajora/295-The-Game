@@ -21,11 +21,11 @@ export const PLAYER_VELOCITY = 200;
 export const PLAYER_ORIGIN_X = 0.4;
 export const PLAYER_ORIGIN_Y = 0.5;
 // specify the number of bullets per second
-const PLAYER_FIRE_RATE_INTERNAL_LEVEL1 = 20;
-const PLAYER_FIRE_RATE_INTERNAL_LEVEL2 = 5;
+const PLAYER_FIRE_RATE_INTERNAL_LEVEL1 = 5;
+const PLAYER_FIRE_RATE_INTERNAL_LEVEL2 = 7;
 const PLAYER_FIRE_RATE_INTERNAL_LEVEL3 = 10;
-const PLAYER_FIRE_RATE_INTERNAL_LEVEL4 = 20;
-const PLAYER_FIRE_RATE_INTERNAL_LEVEL5 = 30;
+const PLAYER_FIRE_RATE_INTERNAL_LEVEL4 = 13;
+const PLAYER_FIRE_RATE_INTERNAL_LEVEL5 = 15;
 
 // convert fire rate to milliseconds
 // default fire rate
@@ -54,7 +54,7 @@ PROPERTIES MAY INCLUDE:
 export const BULLET_MASS = 1;
 export const BULLET_SPEED = 300;
 export const MAX_BULLETS = 10;
-export const BULLET_LIFE = 1000;
+export const BULLET_LIFE = 3000;
 export const BULLET_SCALE = 0.3;
 
 
@@ -65,7 +65,7 @@ export const ENEMY_MIN_SCALE = 0.1;
 export const ENEMY_MAX_SCALE = 0.25;
 export const ENEMY_DRAG = 100;
 
-export const ENEMY_RESPAWN_TIME_DELAY = 5000;
+export const ENEMY_RESPAWN_TIME_DELAY = 1000;
 export const ENEMY_RESPAWN_TIME_DELAY_LEVEL2 = 500;
 export const ENEMY_RESPAWN_TIME_DELAY_LEVEL3 = 300;
 export const ENEMY_RESPAWN_TIME_DELAY_LEVEL4 = 200;

@@ -47,6 +47,7 @@ export class EnemyGroup extends Phaser.Physics.Arcade.Group {
     enemy.setScale(xScale, xScale);
     enemy.setVelocity(xVelocity, yVelocity);
     enemy.setMass(ENEMY_MASS * xScale * (1 / 3));
+    enemy.setAngularVelocity(getRandomInRange(10, 150));
     enemy.setHealth(100);
 
     // move towards player
