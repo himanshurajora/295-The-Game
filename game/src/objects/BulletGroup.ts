@@ -12,6 +12,6 @@ export class BulletGroup extends Phaser.Physics.Arcade.Group {
     const bullet = this.getFirstDead(true);
     (bullet as Bullet).fire(player);
     // shoot sound
-    this.scene.sound.play('shoot', { volume: 0.3 });
+    this.scene.sound.play('shoot', { volume: 0.2 });
   }
 }
