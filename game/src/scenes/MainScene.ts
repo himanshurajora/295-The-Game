@@ -9,7 +9,10 @@ import {
   PLAYER_ORIGIN_X,
   PLAYER_ORIGIN_Y,
 } from '../constants/GameConstants';
-import { setPlayerControlByLevel } from '../utils/level-controls';
+import {
+  setEnemyControlByLevel,
+  setPlayerControlByLevel,
+} from '../utils/level-controls';
 export class MainScene extends Phaser.Scene {
   player: Player;
   cursors: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -17,9 +20,11 @@ export class MainScene extends Phaser.Scene {
   bulletTime: number = 0;
   bulletGroup: BulletGroup;
   enemyGroup: EnemyGroup;
-  playerScore: Phaser.GameObjects.Text;
   enemyTimer: number = 0;
-
+  playerScore: Phaser.GameObjects.Text;
+  currentLevel: Phaser.GameObjects.Text;
+  playerHealth: Phaser.GameObjects.Graphics;
+  playerHealthText: Phaser.GameObjects.Text;
   // keys
   wKey: Phaser.Input.Keyboard.Key;
   sKey: Phaser.Input.Keyboard.Key;
@@ -31,15 +36,18 @@ export class MainScene extends Phaser.Scene {
     });
   }
 
-  init() {}
-
-  // for preloading main scene assets
-  preload() {}
-
   create(): void {
     // making player and enemy
     this.player = new Player(this, 200, 200);
 
+    // player health bar
+    this.playerHealth = this.add.graphics({
+      fillStyle: { color: 0xff0000 },
+    });
+    // this.add.rectangle(this.game.canvas.width - 140, 20, 100, 10, 0xffffff);
+    // TODO: Later fix the player health bar
+    // this.playerHealth.fillRect(this.game.canvas.width - 140, 20, 100, 10);
+    // boundary for player health bar
     // create cursor for keyboard input
     this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -66,8 +74,15 @@ export class MainScene extends Phaser.Scene {
       this.player,
       this.enemyGroup,
       (obj1: Player, obj2: Enemy) => {
-        console.log('player hit enemy');
         obj2.blast(this.enemyGroup, this.player);
+        this.player.health -= 1;
+        this.sound.play('collision', { volume: 0.2 });
+        // this.playerHealth = this.playerHealth.fillRect(
+        //   this.game.canvas.width - 140,
+        //   20,
+        //   this.player.health,
+        //   10
+        // );
       }
     );
 
@@ -80,6 +95,7 @@ export class MainScene extends Phaser.Scene {
         obj1.health -= 10;
         if (obj1.health <= 0) {
           this.player.killCount += obj1.blast(this.enemyGroup);
+          this.sound.play('blast', { volume: 0.2 });
         }
       }
     );
@@ -89,10 +105,30 @@ export class MainScene extends Phaser.Scene {
       fontSize: '12px',
     });
 
+    // show current level
+    this.currentLevel = this.add.text(20, 40, '', {
+      fontSize: '12px',
+    });
+
+    // player health text
+    this.playerHealthText = this.add.text(
+      this.game.canvas.width - 100,
+      20,
+      '',
+      {
+        fontSize: '12px',
+        color: '#ffff00',
+      }
+    );
+
     this.wKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
     this.sKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
     this.aKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
     this.dKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+
+    // game audio
+    let theme = this.sound.add('295-song', { loop: true, volume: 1 });
+    theme.play();
   }
 
   update(time: number, delta: number) {
@@ -130,7 +166,7 @@ export class MainScene extends Phaser.Scene {
 
     // generate enemies
     if (time > this.enemyTimer) {
-      this.enemyTimer = time + ENEMY_RESPAWN_TIME_DELAY;
+      this.enemyTimer = time + setEnemyControlByLevel(this.player.killCount);
       // generate x less than 0 and greater than game width
       this.enemyGroup.createEnemy(this.player);
     }
@@ -138,7 +174,19 @@ export class MainScene extends Phaser.Scene {
     this.physics.world.wrap(this.player, 5);
     this.playerScore.setText(`Kill Count ${this.player.killCount}`);
 
+    // current level
+    this.currentLevel.setText(`Level: ${this.player.killCount / 50}`);
+
+    // player health text
+    this.playerHealthText.setText(`Health:  ${this.player.health}`);
+
     // level controls
     setPlayerControlByLevel(this.player);
+
+    // check for player death
+    if (this.player.health <= 0) {
+      this.scene.start('GameOverScene');
+      localStorage.setItem('295-kill-count', this.player.killCount.toString());
+    }
   }
 }

@@ -43,7 +43,8 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       enemyGroup.remove(this);
 
       this.scene.time.delayedCall(200, () => {
-        explosion.destroy();
+        explosion.setActive(false);
+        explosion.setVisible(false);
       });
       return 1;
     }

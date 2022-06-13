@@ -11,5 +11,7 @@ export class BulletGroup extends Phaser.Physics.Arcade.Group {
     // this will get the first inactive bullet
     const bullet = this.getFirstDead(true);
     (bullet as Bullet).fire(player);
+    // shoot sound
+    this.scene.sound.play('shoot', { volume: 0.3 });
   }
 }
