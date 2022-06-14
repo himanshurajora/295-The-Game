@@ -10,7 +10,7 @@ Logs :
 - Added Shooting bullets logic [04-06-2022]
 - ...Check commits
 
-- [13-4-2002] first ever version ready
+- [13-06-2022] first ever version ready
 
 Strange, This project too is completed under 10 days.
 
