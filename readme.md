@@ -14,4 +14,6 @@ Logs :
 
 Strange, This project too is completed under 10 days.
 
+[Play and Rate on Itch.io](https://himanshurajora.itch.io/game-295)
+
 Made By Vedik Dev - Himanshu Jangid
